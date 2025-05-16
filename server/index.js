@@ -19,11 +19,12 @@ const corsOptions = {
       'https://localhost:5173',
       'https://monkeychat.club',
       process.env.CLIENT_URL
-    ].filter(Boolean).map(url => url.replace(/\/$/, '')); // sondaki slash varsa sil
+    ].filter(Boolean).map(o => o.replace(/\/$/, '')); // slash sil
 
     const normalized = origin?.replace(/\/$/, '');
 
-    console.log('🌍 Gelen origin:', origin); // Debug satırı
+    console.log('🌍 Gelen origin:', origin);
+    console.log('✅ allowedOrigins:', allowedOrigins);
 
     if (!origin || allowedOrigins.includes(normalized)) {
       callback(null, true);
