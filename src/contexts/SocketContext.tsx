@@ -58,7 +58,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
     if (user) {
       console.log(`[SocketContext ${new Date().toISOString()}] Initializing socket connection...`);
       
-      const socketInstance = io({
+      const socketInstance = io(import.meta.env.VITE_SOCKET_URL, {
         path: '/socket.io',
         transports: ['websocket', 'polling'],
         query: { userId: user.id },
