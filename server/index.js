@@ -17,6 +17,7 @@ const corsOptions = {
     const allowedOrigins = [
       'http://localhost:5173',
       'https://localhost:5173',
+      'https://monkeychat.club',
       process.env.CLIENT_URL
     ].filter(Boolean);
     
