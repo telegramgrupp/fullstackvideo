@@ -12,21 +12,23 @@ const app = express();
 const httpServer = createServer(app);
 
 // Configure CORS with explicit origin and credentials
-const corsOptions = {
-  origin: function(origin, callback) {
-    const allowedOrigins = [
-      'http://localhost:5173',
-      'https://localhost:5173',
-      'https://monkeychat.club',
-      process.env.CLIENT_URL
-    ].filter(Boolean);
-    
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+origin: function(origin, callback) {
+  const allowedOrigins = [
+    'http://localhost:5173',
+    'https://localhost:5173',
+    'https://monkeychat.club',
+    process.env.CLIENT_URL
+  ].filter(Boolean);
+
+  const normalizedOrigin = origin?.replace(/\/$/, ''); // sondaki / varsa sil
+
+  if (!origin || allowedOrigins.includes(normalizedOrigin)) {
+    callback(null, true);
+  } else {
+    console.warn(`❌ CORS rejected for origin: ${origin}`);
+    callback(new Error('Not allowed by CORS'));
+  }
+}
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
