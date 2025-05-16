@@ -184,9 +184,27 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         })
       });
 
-      const data = await response.json();
-      
-      if (!response.ok || !data.success) {
+      if (!response.ok) {
+        const errorText = await response.text();
+        let errorMessage: string;
+        try {
+          const errorData = JSON.parse(errorText);
+          errorMessage = errorData.error || 'Failed to add coins';
+        } catch (e) {
+          errorMessage = errorText || 'Failed to add coins';
+        }
+        throw new Error(errorMessage);
+      }
+
+      let data;
+      try {
+        data = await response.json();
+      } catch (e) {
+        console.error('Failed to parse response:', e);
+        throw new Error('Invalid response from server');
+      }
+
+      if (!data.success) {
         throw new Error(data.error || 'Failed to add coins');
       }
 
@@ -215,9 +233,27 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         })
       });
 
-      const data = await response.json();
-      
-      if (!response.ok || !data.success) {
+      if (!response.ok) {
+        const errorText = await response.text();
+        let errorMessage: string;
+        try {
+          const errorData = JSON.parse(errorText);
+          errorMessage = errorData.error || 'Failed to spend coins';
+        } catch (e) {
+          errorMessage = errorText || 'Failed to spend coins';
+        }
+        throw new Error(errorMessage);
+      }
+
+      let data;
+      try {
+        data = await response.json();
+      } catch (e) {
+        console.error('Failed to parse response:', e);
+        throw new Error('Invalid response from server');
+      }
+
+      if (!data.success) {
         setError(data.error || 'Failed to spend coins');
         return false;
       }
