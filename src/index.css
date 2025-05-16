@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --sat: env(safe-area-inset-top);
+    --sar: env(safe-area-inset-right);
+    --sab: env(safe-area-inset-bottom);
+    --sal: env(safe-area-inset-left);
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    @apply bg-gradient-to-br from-[#0F2027] via-[#203A43] to-[#2C5364] text-white;
+    min-height: 100dvh;
+    padding: var(--sat) var(--sar) var(--sab) var(--sal);
+  }
+
+  /* Prevent overscroll bounce */
+  html {
+    overflow-x: hidden;
+    height: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-gradient-to-r from-primary-500 to-primary-400 text-black font-semibold 
+           px-6 py-2.5 rounded-full shadow-lg hover:shadow-primary-500/25
+           active:scale-95 transition-all duration-200
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100;
+  }
+  
+  .btn-secondary {
+    @apply bg-gradient-to-r from-secondary-500 to-secondary-400 text-white font-semibold 
+           px-6 py-2.5 rounded-full shadow-lg hover:shadow-secondary-500/25
+           active:scale-95 transition-all duration-200
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100;
+  }
+  
+  .btn-outline {
+    @apply border-2 border-white/20 bg-black/20 backdrop-blur-sm text-white font-semibold 
+           px-6 py-2.5 rounded-full hover:bg-white/10 active:scale-95 transition-all duration-200;
+  }
+  
+  .glass-panel {
+    @apply bg-white/5 backdrop-blur-md rounded-2xl border border-white/10;
+  }
+  
+  .coin-display {
+    @apply flex items-center gap-2 bg-black/20 backdrop-blur-sm px-4 py-2 rounded-full text-white font-semibold;
+  }
+
+  .safe-area-container {
+    @apply px-4 md:px-6 lg:px-8 
+           pt-[calc(1rem+var(--sat))] 
+           pb-[calc(1rem+var(--sab))] 
+           pl-[calc(1rem+var(--sal))] 
+           pr-[calc(1rem+var(--sar))];
+  }
+
+  .responsive-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6;
+  }
+
+  .responsive-container {
+    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .video-container {
+    @apply h-[calc(100dvh-var(--sat)-var(--sab))] md:h-[calc(100vh-4rem)];
+  }
+}
+
+/* Debug utilities */
+.debug * {
+  @apply outline outline-1 outline-red-500/20;
+}
+
+.debug-flow > * {
+  @apply outline outline-1 outline-blue-500/20;
+}

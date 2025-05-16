@@ -1,0 +1,51 @@
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "wasm"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id
+  username  String
+  gender    String?
+  country   String?
+  coins     Int      @default(10)
+  createdAt DateTime @default(now())
+  lastSeen  DateTime @default(now())
+  isOnline  Boolean  @default(false)
+  isBanned  Boolean  @default(false)
+}
+
+model Transaction {
+  id        String   @id
+  userId    String
+  amount    Int
+  type      String   // 'purchase' or 'spend'
+  reason    String
+  status    String   // 'completed', 'pending', 'failed'
+  createdAt DateTime @default(now())
+}
+
+model Match {
+  id        String    @id
+  peerA     String
+  peerB     String?
+  isFake    Boolean   @default(false)
+  startedAt DateTime  @default(now())
+  endedAt   DateTime?
+  duration  Int?
+}
+
+model Report {
+  id         String   @id
+  reporterId String
+  reportedId String?
+  matchId    String
+  reason     String
+  createdAt  DateTime @default(now())
+  resolved   Boolean  @default(false)
+}
